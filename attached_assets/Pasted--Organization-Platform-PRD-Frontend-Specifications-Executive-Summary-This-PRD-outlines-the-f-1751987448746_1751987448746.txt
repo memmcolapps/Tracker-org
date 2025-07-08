@@ -1,0 +1,641 @@
+# Organization Platform PRD - Frontend Specifications
+
+## Executive Summary
+
+This PRD outlines the frontend requirements for the Organization Platform, which serves as the monitoring and management interface for organizations to track their assigned devices. The platform focuses on providing clear visibility into device usage, location tracking, and performance analytics in an intuitive, user-friendly interface.
+
+## User Roles & Permissions
+
+### Organization Admin
+- Full access to organization's devices and data
+- User management within organization
+- Settings and configuration access
+- Analytics and reporting access
+
+### Organization User
+- View access to assigned devices
+- Basic usage and location data
+- Limited reporting access
+- No user management capabilities
+
+## Platform Structure & Navigation
+
+### Primary Navigation
+```
+Dashboard
+├── Devices
+├── Usage Analytics
+├── Locations
+├── Reports
+├── Alerts
+├── Users (Admin only)
+└── Settings (Admin only)
+```
+
+### Secondary Navigation
+- Breadcrumb navigation
+- Quick device search
+- Notification center
+- User profile menu
+- Help and support
+
+## Page-by-Page Specifications
+
+## 1. Dashboard Page
+
+### Layout Requirements
+- **Header**: Organization logo, device search, notifications, user menu
+- **Main Content**: Dashboard widgets in responsive grid
+- **Quick Actions**: Floating action button for common tasks
+
+### Dashboard Widgets
+
+#### 1. Devices Overview Widget
+- **Total Devices**: Count with status breakdown
+- **Online Devices**: Current online count with percentage
+- **Offline Devices**: Count with last seen information
+- **Status Icons**: Visual indicators for each status
+- **Quick Action**: "View All Devices" button
+
+#### 2. Usage Summary Widget
+- **Current Month Usage**: Total data consumption
+- **Usage Trend**: Mini chart showing daily usage
+- **Top Consuming Device**: Device with highest usage
+- **Data Alerts**: Count of devices near limits
+- **Quick Action**: "View Usage Details" button
+
+#### 3. Location Overview Widget
+- **Interactive Map**: Shows all device locations
+- **Location Clusters**: Grouped markers for nearby devices
+- **Offline Locations**: Last known positions
+- **Geofence Alerts**: Alerts for boundary violations
+- **Quick Action**: "View Full Map" button
+
+#### 4. Recent Activity Widget
+- **Device Events**: Recent online/offline events
+- **Usage Alerts**: Data limit warnings
+- **Location Updates**: Recent location changes
+- **System Notifications**: Important system messages
+- **Time Stamps**: Relative time display (e.g., "2 hours ago")
+
+#### 5. Performance Metrics Widget
+- **Connection Quality**: Average signal strength
+- **Data Efficiency**: Usage vs. allocation
+- **Device Health**: Overall device performance
+- **Network Coverage**: Coverage quality metrics
+
+### Interactive Features
+- **Real-time Updates**: Live data refresh every 30 seconds
+- **Widget Customization**: Drag-and-drop widget arrangement
+- **Time Range Selection**: Filter data by time periods
+- **Responsive Design**: Adapts to different screen sizes
+
+## 2. Devices Page
+
+### Layout Structure
+- **Header**: Page title, search bar, filter toggle, view options
+- **Filters Panel**: Collapsible filter sidebar
+- **Main Content**: Device list/grid view with sorting
+- **Pagination**: Load more or pagination controls
+
+### Device List View
+#### Device Card Components
+1. **Device Header**
+   - Device label (prominent)
+   - Status indicator (online/offline/error)
+   - Last seen timestamp
+   - Signal strength indicator
+
+2. **Device Details**
+   - IMEI (copyable)
+   - Network provider with country flag
+   - Current location (clickable for map)
+   - IP address (if available)
+
+3. **Usage Information**
+   - Current month usage bar
+   - Percentage of data limit used
+   - Usage trend (up/down indicator)
+   - Days remaining in billing cycle
+
+4. **Quick Actions**
+   - "View Details" button
+   - "Show Location" button
+   - "Usage History" button
+   - "Settings" button (if admin)
+
+### Device Filters
+- **Status Filter**: Online, Offline, Error, All
+- **Location Filter**: Geographic regions or custom areas
+- **Usage Filter**: High usage, Near limit, Normal, Low
+- **Network Filter**: By network provider
+- **Date Range**: For activity and usage data
+
+### Device Grid View
+- **Compact Cards**: Smaller cards showing essential info
+- **Grid Layout**: 2-4 columns based on screen size
+- **Hover Effects**: Additional details on hover
+- **Quick Actions**: Action buttons on card hover
+
+### Device Details Modal/Page
+
+#### Device Information Tab
+- **Basic Details**
+  - Device label and description
+  - IMEI and network information
+  - Model and manufacturer
+  - Activation date
+
+- **Current Status**
+  - Online/offline status with timestamp
+  - Signal strength and quality
+  - IP address and network details
+  - Battery level (if available)
+
+#### Location Tab
+- **Interactive Map**
+  - Current device location
+  - Location accuracy circle
+  - Street view integration
+  - Satellite/terrain view options
+
+- **Location History**
+  - Timeline view of location changes
+  - Distance traveled
+  - Location accuracy over time
+  - Export location data
+
+#### Usage Tab
+- **Usage Charts**
+  - Daily usage bar chart
+  - Monthly usage trends
+  - Hourly usage patterns
+  - Data type breakdown
+
+- **Usage Statistics**
+  - Current period usage
+  - Average daily usage
+  - Peak usage times
+  - Usage predictions
+
+- **Data Limits**
+  - Current limit settings
+  - Usage alerts configuration
+  - Billing period information
+  - Overage notifications
+
+#### Settings Tab (Admin Only)
+- **Device Configuration**
+  - Device label editing
+  - Alert thresholds
+  - Monitoring settings
+
+- **User Assignment**
+  - Assign device to users
+  - Access permissions
+  - Notification settings
+
+## 3. Usage Analytics Page
+
+### Layout Structure
+- **Header**: Page title, date range selector, export options
+- **Summary Cards**: Key usage metrics
+- **Charts Section**: Interactive usage charts
+- **Data Table**: Detailed usage breakdown
+
+### Summary Cards
+1. **Total Usage Card**
+   - Current period total
+   - Comparison to previous period
+   - Percentage change indicator
+   - Cost implications (if available)
+
+2. **Average Daily Usage Card**
+   - Daily average calculation
+   - Trend indicator
+   - Peak usage day
+   - Usage pattern insights
+
+3. **Top Consuming Device Card**
+   - Device with highest usage
+   - Usage amount and percentage
+   - Link to device details
+   - Usage trend
+
+4. **Alerts and Warnings Card**
+   - Active usage alerts
+   - Devices near limits
+   - Projected overages
+   - Action items
+
+### Analytics Charts
+
+#### Usage Over Time Chart
+- **Line Chart**: Daily/weekly/monthly usage trends
+- **Interactive**: Zoom and pan capabilities
+- **Multiple Metrics**: Data usage, cost, device count
+- **Annotations**: Mark important events or changes
+
+#### Device Usage Comparison Chart
+- **Bar Chart**: Usage by device
+- **Sorting Options**: By usage, alphabetical, status
+- **Color Coding**: Status-based colors
+- **Interactive**: Click to view device details
+
+#### Usage by Time of Day Chart
+- **Heatmap**: Usage patterns by hour/day
+- **Peak Hours**: Highlighting high usage periods
+- **Pattern Analysis**: Workday vs. weekend patterns
+- **Filtering**: By device or date range
+
+#### Geographic Usage Chart
+- **Map Visualization**: Usage by location
+- **Bubble Size**: Represents usage amount
+- **Color Coding**: Usage intensity
+- **Clustering**: Group nearby devices
+
+### Usage Data Table
+- **Columns**: Device, Usage, Percentage, Trend, Status
+- **Sorting**: Multi-column sorting
+- **Filtering**: Advanced filtering options
+- **Export**: CSV, Excel, PDF export
+- **Pagination**: Efficient data loading
+
+### Export Options
+- **Data Export**: CSV, Excel formats
+- **Report Export**: PDF reports with charts
+- **Custom Reports**: Configure export content
+- **Scheduled Reports**: Automated report generation
+
+## 4. Locations Page
+
+### Layout Structure
+- **Header**: Page title, search bar, view options
+- **Map Container**: Full-screen interactive map
+- **Device List**: Collapsible device sidebar
+- **Controls**: Map controls and filters
+
+### Interactive Map Features
+
+#### Map Display
+- **Device Markers**: Real-time device positions
+- **Marker Colors**: Status-based color coding
+- **Marker Clustering**: Group nearby devices
+- **Custom Icons**: Device-specific marker icons
+
+#### Map Controls
+- **Zoom Controls**: Zoom in/out, fit to bounds
+- **Layer Controls**: Satellite, terrain, street views
+- **Fullscreen**: Full-screen map mode
+- **Search**: Search for locations or addresses
+
+#### Device Information
+- **Marker Click**: Show device popup
+- **Device Details**: Name, status, last update
+- **Quick Actions**: View details, usage, settings
+- **Navigation**: Get directions to device
+
+### Location History
+
+#### Timeline View
+- **Chronological List**: Location changes over time
+- **Time Stamps**: Precise timing information
+- **Distance Calculation**: Distance between points
+- **Duration**: Time spent at each location
+
+#### Track Visualization
+- **Route Lines**: Show movement paths
+- **Speed Indicators**: Color-coded speed segments
+- **Stop Points**: Identify stationary periods
+- **Playback**: Animate historical movement
+
+### Geofencing (If Implemented)
+
+#### Geofence Management
+- **Draw Geofences**: Create custom boundaries
+- **Geofence List**: Manage existing geofences
+- **Alert Configuration**: Set boundary alerts
+- **Geofence History**: Track boundary events
+
+#### Geofence Alerts
+- **Entry/Exit Alerts**: Boundary crossing notifications
+- **Violation History**: Record of geofence events
+- **Alert Settings**: Configure notification preferences
+- **Reporting**: Geofence compliance reports
+
+### Location Filters and Search
+- **Device Filter**: Filter by specific devices
+- **Time Range**: Historical location data
+- **Location Search**: Search by address or coordinates
+- **Status Filter**: Online/offline devices only
+
+## 5. Reports Page
+
+### Layout Structure
+- **Header**: Page title, "Generate Report" button
+- **Report Types**: Tabbed interface for different reports
+- **Filters Panel**: Report configuration options
+- **Report Preview**: Generated report display
+
+### Report Types
+
+#### Usage Reports
+- **Monthly Usage Summary**
+  - Total usage by device
+  - Usage trends and patterns
+  - Cost analysis (if available)
+  - Recommendations
+
+- **Device Performance Report**
+  - Device uptime statistics
+  - Connection quality metrics
+  - Usage efficiency analysis
+  - Performance recommendations
+
+- **Usage Comparison Report**
+  - Period-over-period comparison
+  - Device-to-device comparison
+  - Benchmark analysis
+  - Trend identification
+
+#### Location Reports
+- **Location Summary**
+  - Device locations overview
+  - Location accuracy metrics
+  - Geographic distribution
+  - Location-based insights
+
+- **Movement Analysis**
+  - Travel patterns
+  - Distance calculations
+  - Route optimization
+  - Location history
+
+#### Custom Reports
+- **Report Builder**
+  - Drag-and-drop interface
+  - Custom metrics selection
+  - Flexible date ranges
+  - Multiple output formats
+
+### Report Generation Interface
+
+#### Report Configuration
+- **Report Type Selection**: Dropdown menu
+- **Date Range Picker**: Start and end dates
+- **Device Selection**: Multi-select device list
+- **Output Format**: PDF, CSV, Excel options
+
+#### Scheduling Options
+- **One-time Generation**: Immediate report
+- **Recurring Reports**: Daily, weekly, monthly
+- **Email Delivery**: Automated email reports
+- **Report History**: Previous reports archive
+
+#### Report Preview and Export
+- **Live Preview**: Real-time report preview
+- **Export Options**: Multiple format support
+- **Email Sharing**: Share reports via email
+- **Report Storage**: Save reports for later access
+
+## 6. Alerts Page
+
+### Layout Structure
+- **Header**: Page title, "Create Alert" button
+- **Alert Types**: Different alert categories
+- **Active Alerts**: Current alert list
+- **Alert History**: Historical alerts
+
+### Alert Types
+
+#### Usage Alerts
+- **Data Limit Alerts**
+  - Threshold configuration (80%, 90%, 100%)
+  - Device selection
+  - Notification methods
+  - Alert frequency
+
+- **Usage Anomaly Alerts**
+  - Unusual usage patterns
+  - Spike detection
+  - Trend analysis
+  - Automated notifications
+
+#### Device Alerts
+- **Connectivity Alerts**
+  - Device offline notifications
+  - Connection quality issues
+  - Network problems
+  - Timeout configurations
+
+- **Location Alerts**
+  - Geofence violations
+  - Location accuracy issues
+  - Movement alerts
+  - Zone-based notifications
+
+#### System Alerts
+- **System Notifications**
+  - Platform updates
+  - Maintenance windows
+  - Service disruptions
+  - Account notifications
+
+### Alert Configuration
+
+#### Alert Creation Form
+- **Alert Name**: Descriptive alert name
+- **Alert Type**: Category selection
+- **Trigger Conditions**: Threshold settings
+- **Device Selection**: Apply to specific devices
+- **Notification Settings**: Email, SMS, push notifications
+
+#### Alert Management
+- **Alert List**: All configured alerts
+- **Status Toggle**: Enable/disable alerts
+- **Edit Alerts**: Modify existing alerts
+- **Delete Alerts**: Remove unwanted alerts
+
+### Alert Notifications
+
+#### Notification Center
+- **Real-time Notifications**: Live alert feed
+- **Notification History**: Past notifications
+- **Mark as Read**: Notification management
+- **Notification Settings**: Preferences
+
+#### Notification Methods
+- **Email Notifications**: Detailed email alerts
+- **Push Notifications**: Browser notifications
+- **SMS Notifications**: Text message alerts (if configured)
+- **In-app Notifications**: Platform notifications
+
+## 7. Users Page (Admin Only)
+
+### Layout Structure
+- **Header**: Page title, "Add User" button
+- **User List**: Organization users table
+- **User Details**: User management interface
+- **Permissions**: Role and access management
+
+### User Management
+
+#### User List Table
+- **Columns**: Name, Email, Role, Status, Last Login, Actions
+- **Sorting**: Multi-column sorting
+- **Filtering**: By role, status, activity
+- **Search**: User search functionality
+
+#### Add/Edit User Form
+- **Basic Information**
+  - Full name (required)
+  - Email address (required)
+  - Phone number
+  - Department/role
+
+- **Access Settings**
+  - User role (Admin/User)
+  - Device access permissions
+  - Feature access control
+  - Account status
+
+- **Notification Preferences**
+  - Email notifications
+  - Alert preferences
+  - Report delivery settings
+  - Communication preferences
+
+### User Permissions
+
+#### Role-Based Access
+- **Admin Role**: Full organization access
+- **User Role**: Limited device access
+- **Custom Roles**: Tailored permissions
+- **Permission Matrix**: Clear access overview
+
+#### Device Access Control
+- **Device Assignment**: Assign specific devices
+- **Access Levels**: View, monitor, manage
+- **Time-based Access**: Temporary access
+- **Bulk Permissions**: Mass permission updates
+
+## 8. Settings Page (Admin Only)
+
+### Layout Structure
+- **Settings Categories**: Sidebar navigation
+- **Settings Forms**: Configuration interfaces
+- **Save/Cancel**: Action buttons
+- **Help Text**: Contextual help information
+
+### Settings Categories
+
+#### Organization Settings
+- **Organization Profile**
+  - Organization name and details
+  - Contact information
+  - Billing information
+  - Account settings
+
+- **Branding**
+  - Logo upload
+  - Color scheme
+  - Custom branding
+  - White-label options
+
+#### Notification Settings
+- **Alert Configuration**
+  - Default alert thresholds
+  - Notification methods
+  - Alert escalation
+  - Quiet hours
+
+- **Report Settings**
+  - Default report formats
+  - Report scheduling
+  - Email templates
+  - Report retention
+
+#### Integration Settings
+- **API Settings**
+  - API keys management
+  - Webhook configurations
+  - Third-party integrations
+  - Data export settings
+
+- **User Settings**
+  - Default user permissions
+  - Password policies
+  - Session settings
+  - Access controls
+
+## UI/UX Guidelines
+
+### Design System
+- **Color Palette**: Professional, accessible colors
+- **Typography**: Clear, readable fonts
+- **Icons**: Consistent icon library
+- **Spacing**: Uniform spacing system
+
+### Responsive Design
+- **Mobile-First**: Optimized for mobile devices
+- **Tablet Support**: Enhanced tablet experience
+- **Desktop**: Full-featured desktop interface
+- **Breakpoints**: Standard responsive breakpoints
+
+### Accessibility
+- **WCAG Compliance**: Level AA compliance
+- **Keyboard Navigation**: Full keyboard support
+- **Screen Readers**: Proper ARIA labels
+- **High Contrast**: Accessible color schemes
+
+### Performance
+- **Fast Loading**: Optimized load times
+- **Efficient Rendering**: Smooth interactions
+- **Data Optimization**: Efficient data handling
+- **Offline Support**: Basic offline functionality
+
+## Technical Implementation
+
+### State Management
+- **Global State**: Application-wide state
+- **Local State**: Component-specific state
+- **Caching**: Efficient data caching
+- **Synchronization**: Real-time data sync
+
+### Real-time Features
+- **WebSocket**: Live data updates
+- **Push Notifications**: Real-time alerts
+- **Auto-refresh**: Automatic data refresh
+- **Polling**: Fallback for real-time data
+
+### Data Handling
+- **Pagination**: Efficient data loading
+- **Filtering**: Advanced filtering options
+- **Sorting**: Multi-column sorting
+- **Search**: Fast search functionality
+
+### Security
+- **Authentication**: Secure login system
+- **Authorization**: Role-based access
+- **Data Protection**: Secure data handling
+- **Session Management**: Secure sessions
+
+## Success Metrics
+
+### User Experience
+- **Task Completion Rate**: Efficient task completion
+- **User Satisfaction**: High satisfaction scores
+- **Error Rates**: Low error occurrence
+- **Support Requests**: Reduced support needs
+
+### Performance
+- **Load Times**: Fast application loading
+- **Response Times**: Quick user interactions
+- **Uptime**: High system availability
+- **Data Accuracy**: Reliable data display
+
+### Business Impact
+- **User Adoption**: High platform adoption
+- **Feature Usage**: Active feature utilization
+- **Cost Efficiency**: Reduced operational costs
+- **Decision Making**: Improved data-driven decisions
