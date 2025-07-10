@@ -8,16 +8,17 @@ import { useState } from "react";
 
 export default function Devices() {
   const { data: devices, isLoading } = useDevices();
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [viewMode, setViewMode] = useState<"list" | "grid">("list");
 
   return (
     <div>
-      <Header title="Device Management" />
       <div className="p-6">
         {/* Page Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-slate-800">Device Management</h2>
+            <h2 className="text-xl font-semibold text-slate-800">
+              Device Management
+            </h2>
             <div className="flex items-center space-x-4">
               <Button>
                 <Plus className="h-4 w-4 mr-2" />
@@ -25,16 +26,16 @@ export default function Devices() {
               </Button>
               <div className="flex items-center space-x-2">
                 <Button
-                  variant={viewMode === 'list' ? 'default' : 'outline'}
+                  variant={viewMode === "list" ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setViewMode('list')}
+                  onClick={() => setViewMode("list")}
                 >
                   <List className="h-4 w-4" />
                 </Button>
                 <Button
-                  variant={viewMode === 'grid' ? 'default' : 'outline'}
+                  variant={viewMode === "grid" ? "default" : "outline"}
                   size="sm"
-                  onClick={() => setViewMode('grid')}
+                  onClick={() => setViewMode("grid")}
                 >
                   <Grid className="h-4 w-4" />
                 </Button>
@@ -52,7 +53,10 @@ export default function Devices() {
         {isLoading ? (
           <div className="space-y-4">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="h-32 bg-slate-100 rounded animate-pulse"></div>
+              <div
+                key={i}
+                className="h-32 bg-slate-100 rounded animate-pulse"
+              ></div>
             ))}
           </div>
         ) : (
@@ -73,8 +77,12 @@ export default function Devices() {
               Previous
             </Button>
             <Button size="sm">1</Button>
-            <Button variant="outline" size="sm">2</Button>
-            <Button variant="outline" size="sm">3</Button>
+            <Button variant="outline" size="sm">
+              2
+            </Button>
+            <Button variant="outline" size="sm">
+              3
+            </Button>
             <Button variant="outline" size="sm">
               Next
             </Button>

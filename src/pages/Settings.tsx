@@ -2,14 +2,19 @@ import { Header } from "@/components/layout/Header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 
 export default function Settings() {
   return (
     <div>
-      <Header title="Settings" />
       <div className="p-6">
         {/* Page Header */}
         <div className="mb-6">
@@ -68,7 +73,9 @@ export default function Settings() {
               <div className="flex items-center justify-between">
                 <div>
                   <Label htmlFor="data-retention">Data Retention</Label>
-                  <p className="text-sm text-slate-500">How long to keep device data</p>
+                  <p className="text-sm text-slate-500">
+                    How long to keep device data
+                  </p>
                 </div>
                 <Select defaultValue="90d">
                   <SelectTrigger className="w-32">
@@ -85,14 +92,18 @@ export default function Settings() {
               <div className="flex items-center justify-between">
                 <div>
                   <Label htmlFor="location-tracking">Location Tracking</Label>
-                  <p className="text-sm text-slate-500">Enable location tracking for devices</p>
+                  <p className="text-sm text-slate-500">
+                    Enable location tracking for devices
+                  </p>
                 </div>
                 <Switch id="location-tracking" defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div>
                   <Label htmlFor="usage-analytics">Usage Analytics</Label>
-                  <p className="text-sm text-slate-500">Collect usage analytics data</p>
+                  <p className="text-sm text-slate-500">
+                    Collect usage analytics data
+                  </p>
                 </div>
                 <Switch id="usage-analytics" defaultChecked />
               </div>

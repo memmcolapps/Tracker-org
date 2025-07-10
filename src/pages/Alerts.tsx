@@ -8,12 +8,13 @@ import { Plus, AlertTriangle, CheckCircle } from "lucide-react";
 export default function Alerts() {
   return (
     <div>
-      <Header title="Alerts & Notifications" />
       <div className="p-6">
         {/* Page Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-slate-800">Alerts & Notifications</h2>
+            <h2 className="text-xl font-semibold text-slate-800">
+              Alerts & Notifications
+            </h2>
             <Button>
               <Plus className="h-4 w-4 mr-2" />
               Create Alert
@@ -27,7 +28,9 @@ export default function Alerts() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-slate-600">Active Alerts</p>
+                  <p className="text-sm font-medium text-slate-600">
+                    Active Alerts
+                  </p>
                   <p className="text-3xl font-bold text-slate-800">12</p>
                 </div>
                 <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
@@ -36,12 +39,14 @@ export default function Alerts() {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-slate-600">Critical Alerts</p>
+                  <p className="text-sm font-medium text-slate-600">
+                    Critical Alerts
+                  </p>
                   <p className="text-3xl font-bold text-slate-800">3</p>
                 </div>
                 <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
@@ -50,12 +55,14 @@ export default function Alerts() {
               </div>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-slate-600">Resolved Today</p>
+                  <p className="text-sm font-medium text-slate-600">
+                    Resolved Today
+                  </p>
                   <p className="text-3xl font-bold text-slate-800">8</p>
                 </div>
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
