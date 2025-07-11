@@ -30,7 +30,7 @@ export default function Alerts() {
                   <p className="text-sm font-medium text-slate-600">
                     Active Alerts
                   </p>
-                  <p className="text-3xl font-bold text-slate-800">12</p>
+                  <p className="text-xl font-bold text-slate-800">12</p>
                 </div>
                 <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                   <AlertTriangle className="h-6 w-6 text-red-600" />
@@ -46,7 +46,7 @@ export default function Alerts() {
                   <p className="text-sm font-medium text-slate-600">
                     Critical Alerts
                   </p>
-                  <p className="text-3xl font-bold text-slate-800">3</p>
+                  <p className="text-xl font-bold text-slate-800">3</p>
                 </div>
                 <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                   <AlertTriangle className="h-6 w-6 text-red-600" />
@@ -62,7 +62,7 @@ export default function Alerts() {
                   <p className="text-sm font-medium text-slate-600">
                     Resolved Today
                   </p>
-                  <p className="text-3xl font-bold text-slate-800">8</p>
+                  <p className="text-xl font-bold text-slate-800">8</p>
                 </div>
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                   <CheckCircle className="h-6 w-6 text-green-600" />

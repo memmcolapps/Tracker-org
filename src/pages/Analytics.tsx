@@ -51,7 +51,7 @@ export default function Analytics() {
                   <p className="text-sm font-medium text-slate-600">
                     Total Usage
                   </p>
-                  <p className="text-2xl font-bold text-slate-800">2.4 TB</p>
+                  <p className="text-xl font-bold text-slate-800">2.4 TB</p>
                 </div>
                 <div className="text-green-600">
                   <TrendingUp className="h-4 w-4 mr-1 inline" />
@@ -68,7 +68,7 @@ export default function Analytics() {
                   <p className="text-sm font-medium text-slate-600">
                     Avg Daily Usage
                   </p>
-                  <p className="text-2xl font-bold text-slate-800">82.3 GB</p>
+                  <p className="text-xl font-bold text-slate-800">82.3 GB</p>
                 </div>
                 <div className="text-red-600">
                   <TrendingDown className="h-4 w-4 mr-1 inline" />
@@ -85,7 +85,7 @@ export default function Analytics() {
                   <p className="text-sm font-medium text-slate-600">
                     Peak Usage
                   </p>
-                  <p className="text-2xl font-bold text-slate-800">145 GB</p>
+                  <p className="text-xl font-bold text-slate-800">145 GB</p>
                 </div>
                 <div className="text-slate-500">
                   <span className="text-sm font-medium">Dec 15</span>
@@ -101,7 +101,7 @@ export default function Analytics() {
                   <p className="text-sm font-medium text-slate-600">
                     Cost Estimate
                   </p>
-                  <p className="text-2xl font-bold text-slate-800">$1,247</p>
+                  <p className="text-xl font-bold text-slate-800">$1,247</p>
                 </div>
                 <div className="text-yellow-600">
                   <TrendingUp className="h-4 w-4 mr-1 inline" />

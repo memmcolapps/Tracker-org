@@ -46,10 +46,10 @@ export function DashboardStats() {
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-slate-600">
+              <p className="text-xs font-medium text-slate-600">
                 Total Devices
               </p>
-              <p className="text-3xl font-bold text-slate-800">
+              <p className="text-xl font-bold text-slate-800">
                 {stats?.totalDevices || 0}
               </p>
             </div>
@@ -76,7 +76,7 @@ export function DashboardStats() {
               <p className="text-sm font-medium text-slate-600">
                 Monthly Usage
               </p>
-              <p className="text-3xl font-bold text-slate-800">
+              <p className="text-xl font-bold text-slate-800">
                 {stats?.monthlyUsage || "0 GB"}
               </p>
             </div>
@@ -104,7 +104,7 @@ export function DashboardStats() {
               <p className="text-sm font-medium text-slate-600">
                 Active Alerts
               </p>
-              <p className="text-3xl font-bold text-slate-800">
+              <p className="text-xl font-bold text-slate-800">
                 {stats?.activeAlerts || 0}
               </p>
             </div>
@@ -135,7 +135,7 @@ export function DashboardStats() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-slate-600">Avg Signal</p>
-              <p className="text-3xl font-bold text-slate-800">
+              <p className="text-xl font-bold text-slate-800">
                 {stats?.avgSignal || 0}%
               </p>
             </div>

@@ -22,7 +22,7 @@ export function Header({ title = "" }: HeaderProps) {
             <Menu className="h-5 w-5" />
           </Button>
           <div className="ml-4 lg:ml-0">
-            <h1 className="text-2xl font-semibold text-slate-800">{title}</h1>
+            <h1 className="text-xl font-semibold text-slate-800">{title}</h1>
           </div>
         </div>
       </div>
