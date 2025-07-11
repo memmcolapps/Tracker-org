@@ -1,4 +1,3 @@
-import { Header } from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import { UserManagement } from "@/components/users/UserManagement";
 import { Plus } from "lucide-react";

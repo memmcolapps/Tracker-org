@@ -1,12 +1,49 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { useUsageAnalytics } from "@/hooks/useAnalytics";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { useState } from "react";
+
+const isLoading = false;
+const usageData = [
+  {
+    date: "2022-01-01",
+    usage: 100,
+  },
+  {
+    date: "2022-01-02",
+    usage: 200,
+  },
+  {
+    date: "2022-01-03",
+    usage: 300,
+  },
+  {
+    date: "2022-01-04",
+    usage: 400,
+  },
+  {
+    date: "2022-01-05",
+    usage: 500,
+  },
+];
 
 export function UsageChart() {
   const [timeRange, setTimeRange] = useState("7d");
-  const { data: usageData, isLoading } = useUsageAnalytics(timeRange);
+  // const { data: usageData, isLoading } = useUsageAnalytics(timeRange);
 
   if (isLoading) {
     return (
@@ -43,10 +80,10 @@ export function UsageChart() {
             <XAxis dataKey="date" />
             <YAxis />
             <Tooltip />
-            <Line 
-              type="monotone" 
-              dataKey="usage" 
-              stroke="hsl(var(--primary))" 
+            <Line
+              type="monotone"
+              dataKey="usage"
+              stroke="hsl(var(--primary))"
               strokeWidth={2}
               dot={{ fill: "hsl(var(--primary))" }}
             />

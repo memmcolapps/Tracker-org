@@ -3,7 +3,6 @@ import { UsageChart } from "@/components/dashboard/UsageChart";
 import { DeviceStatusChart } from "@/components/dashboard/DeviceStatusChart";
 import { RecentActivity } from "@/components/dashboard/RecentActivity";
 import { LocationOverview } from "@/components/dashboard/LocationOverview";
-import { Header } from "@/components/layout/Header";
 
 export default function Dashboard() {
   return (

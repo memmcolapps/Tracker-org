@@ -1,16 +1,38 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import { useDeviceAnalytics } from "@/hooks/useAnalytics";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+} from "recharts";
+// import { useDeviceAnalytics } from "@/hooks/useAnalytics";
 import { Button } from "@/components/ui/button";
 
 const COLORS = {
-  online: 'hsl(var(--success))',
-  offline: 'hsl(var(--destructive))',
-  error: 'hsl(var(--warning))',
+  online: "hsl(var(--success))",
+  offline: "hsl(var(--destructive))",
+  error: "hsl(var(--warning))",
 };
 
+const isLoading = false;
+const deviceData = [
+  {
+    device: "DEV-001",
+    status: "online",
+  },
+  {
+    device: "DEV-002",
+    status: "offline",
+  },
+  {
+    device: "DEV-003",
+    status: "error",
+  },
+];
 export function DeviceStatusChart() {
-  const { data: deviceData, isLoading } = useDeviceAnalytics();
+  // const { data: deviceData, isLoading } = useDeviceAnalytics();
 
   if (isLoading) {
     return (
@@ -46,7 +68,10 @@ export function DeviceStatusChart() {
               dataKey="count"
             >
               {deviceData?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[entry.status as keyof typeof COLORS]} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[entry.status as keyof typeof COLORS]}
+                />
               ))}
             </Pie>
             <Tooltip />

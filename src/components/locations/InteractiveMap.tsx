@@ -1,10 +1,34 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ZoomIn, Expand, MapPin } from "lucide-react";
-import { useLocationAnalytics } from "@/hooks/useAnalytics";
+// import { useLocationAnalytics } from "@/hooks/useAnalytics";
 
+const isLoading = false;
+const locationData = [
+  {
+    id: "1",
+    label: "DEV-001",
+    location: "New York, NY",
+    status: "online",
+    lastSeen: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "2",
+    label: "DEV-042",
+    location: "Chicago, IL",
+    status: "warning",
+    lastSeen: new Date(Date.now() - 1 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "3",
+    label: "DEV-078",
+    location: "Los Angeles, CA",
+    status: "offline",
+    lastSeen: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+  },
+];
 export function InteractiveMap() {
-  const { data: locationData, isLoading } = useLocationAnalytics();
+  // const { data: locationData, isLoading } = useLocationAnalytics();
 
   if (isLoading) {
     return (
@@ -39,8 +63,12 @@ export function InteractiveMap() {
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center">
             <div className="text-center">
               <MapPin className="h-12 w-12 text-primary mx-auto mb-2" />
-              <p className="text-sm font-medium text-slate-800">Interactive Map</p>
-              <p className="text-xs text-slate-500">Device locations would be displayed here</p>
+              <p className="text-sm font-medium text-slate-800">
+                Interactive Map
+              </p>
+              <p className="text-xs text-slate-500">
+                Device locations would be displayed here
+              </p>
             </div>
           </div>
           {/* Mock device markers */}

@@ -1,4 +1,3 @@
-import { Header } from "@/components/layout/Header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +9,6 @@ import {
 } from "@/components/ui/select";
 import { InteractiveMap } from "@/components/locations/InteractiveMap";
 import { LocationHistory } from "@/components/locations/LocationHistory";
-import { Badge } from "@/components/ui/badge";
 import { Plus, Smartphone } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 

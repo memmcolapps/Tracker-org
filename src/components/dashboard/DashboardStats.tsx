@@ -1,11 +1,27 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { useDashboardStats } from "@/hooks/useAnalytics";
 import { Smartphone, BarChart3, AlertTriangle, Signal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 
+const isLoading = false;
+const stats = {
+  totalDevices: 123,
+  onlineDevices: 45,
+  offlineDevices: 67,
+  criticalAlerts: 3,
+  highAlerts: 5,
+  mediumAlerts: 8,
+  lowAlerts: 2,
+  monthlyUsage: "100 GB",
+  usagePercentage: 50,
+  activeAlerts: 10,
+  usageAlerts: 5,
+  connectionAlerts: 3,
+  avgSignal: 75,
+};
+
 export function DashboardStats() {
-  const { data: stats, isLoading } = useDashboardStats();
+  // const { data: stats, isLoading } = useDashboardStats();
 
   if (isLoading) {
     return (
@@ -30,8 +46,12 @@ export function DashboardStats() {
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-slate-600">Total Devices</p>
-              <p className="text-3xl font-bold text-slate-800">{stats?.totalDevices || 0}</p>
+              <p className="text-sm font-medium text-slate-600">
+                Total Devices
+              </p>
+              <p className="text-3xl font-bold text-slate-800">
+                {stats?.totalDevices || 0}
+              </p>
             </div>
             <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
               <Smartphone className="h-6 w-6 text-primary" />
@@ -53,8 +73,12 @@ export function DashboardStats() {
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-slate-600">Monthly Usage</p>
-              <p className="text-3xl font-bold text-slate-800">{stats?.monthlyUsage || "0 GB"}</p>
+              <p className="text-sm font-medium text-slate-600">
+                Monthly Usage
+              </p>
+              <p className="text-3xl font-bold text-slate-800">
+                {stats?.monthlyUsage || "0 GB"}
+              </p>
             </div>
             <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
               <BarChart3 className="h-6 w-6 text-green-600" />
@@ -63,7 +87,9 @@ export function DashboardStats() {
           <div className="mt-4">
             <div className="flex items-center justify-between text-sm">
               <span className="text-slate-600">Usage Progress</span>
-              <span className="text-slate-800 font-medium">{stats?.usagePercentage || 0}%</span>
+              <span className="text-slate-800 font-medium">
+                {stats?.usagePercentage || 0}%
+              </span>
             </div>
             <Progress value={stats?.usagePercentage || 0} className="mt-2" />
           </div>
@@ -75,8 +101,12 @@ export function DashboardStats() {
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-slate-600">Active Alerts</p>
-              <p className="text-3xl font-bold text-slate-800">{stats?.activeAlerts || 0}</p>
+              <p className="text-sm font-medium text-slate-600">
+                Active Alerts
+              </p>
+              <p className="text-3xl font-bold text-slate-800">
+                {stats?.activeAlerts || 0}
+              </p>
             </div>
             <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
               <AlertTriangle className="h-6 w-6 text-yellow-600" />
@@ -85,11 +115,15 @@ export function DashboardStats() {
           <div className="mt-4 space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span className="text-slate-600">Usage Alerts</span>
-              <span className="text-yellow-600 font-medium">{stats?.usageAlerts || 0}</span>
+              <span className="text-yellow-600 font-medium">
+                {stats?.usageAlerts || 0}
+              </span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-slate-600">Connection Alerts</span>
-              <span className="text-red-600 font-medium">{stats?.connectionAlerts || 0}</span>
+              <span className="text-red-600 font-medium">
+                {stats?.connectionAlerts || 0}
+              </span>
             </div>
           </div>
         </CardContent>
@@ -101,7 +135,9 @@ export function DashboardStats() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-slate-600">Avg Signal</p>
-              <p className="text-3xl font-bold text-slate-800">{stats?.avgSignal || 0}%</p>
+              <p className="text-3xl font-bold text-slate-800">
+                {stats?.avgSignal || 0}%
+              </p>
             </div>
             <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
               <Signal className="h-6 w-6 text-green-600" />

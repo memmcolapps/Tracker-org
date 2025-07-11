@@ -1,13 +1,71 @@
 import { Header } from "@/components/layout/Header";
 import { DeviceCard } from "@/components/devices/DeviceCard";
 import { DeviceFilters } from "@/components/devices/DeviceFilters";
-import { useDevices } from "@/hooks/useDevices";
 import { Button } from "@/components/ui/button";
 import { Plus, List, Grid } from "lucide-react";
 import { useState } from "react";
 
+const devices = [
+  {
+    id: "1",
+    name: "iPhone 14",
+    status: "online",
+    location: "San Francisco, CA",
+    lastSeen: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+    label: "DEV-001",
+    imei: "123456789012345",
+    networkProvider: "Verizon",
+    signalStrength: 100,
+  },
+  {
+    id: "2",
+    name: "iPhone 14",
+    status: "online",
+    location: "San Francisco, CA",
+    lastSeen: new Date(Date.now() - 1 * 60 * 1000).toISOString(),
+    label: "DEV-002",
+    imei: "123456789012345",
+    networkProvider: "Verizon",
+    signalStrength: 100,
+  },
+  {
+    id: "3",
+    name: "iPhone 14",
+    status: "online",
+    location: "New York, NY",
+    lastSeen: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+    label: "DEV-001",
+    imei: "123456789012345",
+    networkProvider: "Verizon",
+    signalStrength: 100,
+  },
+  {
+    id: "4",
+    name: "iPhone 14",
+    status: "online",
+    location: "San Francisco, CA",
+    lastSeen: new Date(Date.now() - 1 * 60 * 1000).toISOString(),
+    label: "DEV-002",
+    imei: "123456789012345",
+    networkProvider: "Verizon",
+    signalStrength: 100,
+  },
+  {
+    id: "5",
+    name: "iPhone 14",
+    status: "online",
+    location: "San Francisco, CA",
+    lastSeen: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+    label: "DEV-003",
+    imei: "123456789012345",
+    networkProvider: "Verizon",
+    signalStrength: 100,
+  },
+];
+
 export default function Devices() {
-  const { data: devices, isLoading } = useDevices();
+  const isLoading = false;
+  // const { data: devices, isLoading } = useDevices();
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
 
   return (

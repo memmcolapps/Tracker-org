@@ -1,11 +1,41 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { useDevices } from "@/hooks/useDevices";
 import { Smartphone, ArrowUp, ArrowDown } from "lucide-react";
 
+const devices = [
+  {
+    id: "1",
+    label: "DEV-001",
+    location: "New York, NY",
+    status: "online",
+    lastSeen: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "2",
+    label: "DEV-042",
+    location: "Chicago, IL",
+    status: "warning",
+    lastSeen: new Date(Date.now() - 1 * 60 * 1000).toISOString(),
+  },
+  {
+    id: "3",
+    label: "DEV-078",
+    location: "Los Angeles, CA",
+    status: "offline",
+    lastSeen: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+  },
+];
+const isLoading = false;
 export function UsageDataTable() {
-  const { data: devices, isLoading } = useDevices();
+  // const { data: devices, isLoading } = useDevices();
 
   if (isLoading) {
     return (
@@ -45,13 +75,19 @@ export function UsageDataTable() {
                       <Smartphone className="h-4 w-4 text-green-600" />
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-slate-800">{device.label}</div>
-                      <div className="text-sm text-slate-500">{device.location}</div>
+                      <div className="text-sm font-medium text-slate-800">
+                        {device.label}
+                      </div>
+                      <div className="text-sm text-slate-500">
+                        {device.location}
+                      </div>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <div className="text-sm font-medium text-slate-800">8.7 GB</div>
+                  <div className="text-sm font-medium text-slate-800">
+                    8.7 GB
+                  </div>
                   <div className="text-sm text-slate-500">This month</div>
                 </TableCell>
                 <TableCell className="text-sm text-slate-800">12.3%</TableCell>
@@ -62,7 +98,13 @@ export function UsageDataTable() {
                   </span>
                 </TableCell>
                 <TableCell>
-                  <Badge className={`${device.status === 'online' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                  <Badge
+                    className={`${
+                      device.status === "online"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                  >
                     {device.status}
                   </Badge>
                 </TableCell>

@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useAlerts } from "@/hooks/useAlerts";
 import { AlertTriangle, Wifi, Signal } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
@@ -33,8 +32,48 @@ const getSeverityColor = (severity: string) => {
   }
 };
 
+const isLoading = false;
+const alerts = [
+  {
+    id: "1",
+    title: "Critical Alert",
+    message: "Device XYZ has been offline for more than 30 minutes",
+    type: "usage",
+    severity: "critical",
+    createdAt: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+    status: "active",
+  },
+  {
+    id: "2",
+    title: "High Alert",
+    message: "Device XYZ has been offline for more than 30 minutes",
+    type: "usage",
+    severity: "high",
+    createdAt: new Date(Date.now() - 1 * 60 * 1000).toISOString(),
+    status: "active",
+  },
+  {
+    id: "3",
+    title: "Medium Alert",
+    message: "Device XYZ has been offline for more than 30 minutes",
+    type: "usage",
+    severity: "medium",
+    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    status: "active",
+  },
+  {
+    id: "4",
+    title: "Low Alert",
+    message: "Device XYZ has been offline for more than 30 minutes",
+    type: "usage",
+    severity: "low",
+    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    status: "active",
+  },
+];
+
 export function ActiveAlerts() {
-  const { data: alerts, isLoading } = useAlerts();
+  // const { data: alerts, isLoading } = useAlerts();
 
   if (isLoading) {
     return (
@@ -45,7 +84,10 @@ export function ActiveAlerts() {
         <CardContent>
           <div className="space-y-4">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-16 bg-slate-100 rounded animate-pulse"></div>
+              <div
+                key={i}
+                className="h-16 bg-slate-100 rounded animate-pulse"
+              ></div>
             ))}
           </div>
         </CardContent>
@@ -60,32 +102,42 @@ export function ActiveAlerts() {
       </CardHeader>
       <CardContent>
         <div className="divide-y divide-slate-200">
-          {alerts?.filter(alert => alert.status === 'active').map((alert) => (
-            <div key={alert.id} className="py-4 flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-                  {getAlertIcon(alert.type)}
+          {alerts
+            ?.filter((alert) => alert.status === "active")
+            .map((alert) => (
+              <div
+                key={alert.id}
+                className="py-4 flex items-center justify-between"
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                    {getAlertIcon(alert.type)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-slate-800">
+                      {alert.title}
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      {alert.message} •{" "}
+                      {formatDistanceToNow(new Date(alert.createdAt), {
+                        addSuffix: true,
+                      })}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-slate-800">{alert.title}</p>
-                  <p className="text-xs text-slate-500">
-                    {alert.message} • {formatDistanceToNow(new Date(alert.createdAt), { addSuffix: true })}
-                  </p>
+                <div className="flex items-center space-x-2">
+                  <Badge className={getSeverityColor(alert.severity)}>
+                    {alert.severity}
+                  </Badge>
+                  <Button variant="outline" size="sm">
+                    View Device
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    Dismiss
+                  </Button>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Badge className={getSeverityColor(alert.severity)}>
-                  {alert.severity}
-                </Badge>
-                <Button variant="outline" size="sm">
-                  View Device
-                </Button>
-                <Button variant="ghost" size="sm">
-                  Dismiss
-                </Button>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </CardContent>
     </Card>

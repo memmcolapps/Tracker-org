@@ -1,15 +1,15 @@
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
-import { 
-  Building2, 
-  LayoutDashboard, 
-  Smartphone, 
-  BarChart3, 
-  MapPin, 
-  FileText, 
-  Bell, 
-  Users, 
-  Settings 
+import {
+  Building2,
+  LayoutDashboard,
+  Smartphone,
+  BarChart3,
+  MapPin,
+  FileText,
+  Bell,
+  Users,
+  Settings,
 } from "lucide-react";
 
 const navigation = [
@@ -35,13 +35,17 @@ export function Sidebar() {
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <Building2 className="w-5 h-5 text-white" />
             </div>
-            <span className="ml-3 text-xl font-semibold text-slate-800">OrgPlatform</span>
+            <span className="ml-3 text-xl font-semibold text-slate-800">
+              Nigeria Police
+            </span>
           </div>
 
           {/* Navigation */}
           <nav className="mt-8 flex-1 px-2 space-y-1">
             {navigation.map((item) => {
-              const isActive = location === item.href || (item.href !== "/" && location.startsWith(item.href));
+              const isActive =
+                location === item.href ||
+                (item.href !== "/" && location.startsWith(item.href));
               return (
                 <Link key={item.name} href={item.href}>
                   <a

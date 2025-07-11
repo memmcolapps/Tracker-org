@@ -1,10 +1,66 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
-import { useUsageAnalytics, useDeviceAnalytics } from "@/hooks/useAnalytics";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+} from "recharts";
 
 export function AnalyticsCharts() {
-  const { data: usageData, isLoading: usageLoading } = useUsageAnalytics();
-  const { data: deviceData, isLoading: deviceLoading } = useDeviceAnalytics();
+  const isLoading = false;
+  const usageData = [
+    {
+      date: "2022-01-01",
+      usage: 100,
+    },
+    {
+      date: "2022-01-02",
+      usage: 200,
+    },
+    {
+      date: "2022-01-03",
+      usage: 300,
+    },
+    {
+      date: "2022-01-04",
+      usage: 400,
+    },
+    {
+      date: "2022-01-05",
+      usage: 500,
+    },
+  ];
+  const deviceData = [
+    {
+      device: "DEV-001",
+      usage: 100,
+    },
+    {
+      device: "DEV-002",
+      usage: 200,
+    },
+    {
+      device: "DEV-003",
+      usage: 300,
+    },
+    {
+      device: "DEV-004",
+      usage: 400,
+    },
+    {
+      device: "DEV-005",
+      usage: 500,
+    },
+  ];
+  const usageLoading = false;
+  const deviceLoading = false;
+  // const { data: usageData, isLoading: usageLoading } = useUsageAnalytics();
+  // const { data: deviceData, isLoading: deviceLoading } = useDeviceAnalytics();
 
   if (usageLoading || deviceLoading) {
     return (
