@@ -7,9 +7,7 @@ import {
   BarChart3,
   MapPin,
   FileText,
-  Bell,
   Users,
-  Settings,
 } from "lucide-react";
 
 const navigation = [
@@ -18,9 +16,7 @@ const navigation = [
   { name: "Usage Analytics", href: "/analytics", icon: BarChart3 },
   { name: "Locations", href: "/locations", icon: MapPin },
   { name: "Reports", href: "/reports", icon: FileText },
-  { name: "Alerts", href: "/alerts", icon: Bell },
   { name: "Users", href: "/users", icon: Users },
-  { name: "Settings", href: "/settings", icon: Settings },
 ];
 
 export function Sidebar() {

@@ -8,7 +8,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { InteractiveMap } from "@/components/locations/InteractiveMap";
-import { LocationHistory } from "@/components/locations/LocationHistory";
 import { Plus, Smartphone } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
@@ -125,9 +124,6 @@ export default function Locations() {
             </CardContent>
           </Card>
         </div>
-
-        {/* Location History */}
-        <LocationHistory />
       </div>
     </div>
   );
