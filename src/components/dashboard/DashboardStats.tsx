@@ -49,7 +49,7 @@ export function DashboardStats() {
               <p className="text-xs font-medium text-slate-600">
                 Total Devices
               </p>
-              <p className="text-xl font-bold text-slate-800">
+              <p className="text-lg font-bold text-slate-800">
                 {stats?.totalDevices || 0}
               </p>
             </div>
@@ -58,10 +58,13 @@ export function DashboardStats() {
             </div>
           </div>
           <div className="mt-4 flex items-center space-x-2">
-            <Badge variant="secondary" className="bg-green-100 text-green-800">
+            <Badge
+              variant="secondary"
+              className="bg-green-100 text-green-800 p-2"
+            >
               {stats?.onlineDevices || 0} Online
             </Badge>
-            <Badge variant="secondary" className="bg-red-100 text-red-800">
+            <Badge variant="secondary" className="bg-red-100 text-red-800 p-2">
               {stats?.offlineDevices || 0} Offline
             </Badge>
           </div>
@@ -73,10 +76,10 @@ export function DashboardStats() {
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-slate-600">
+              <p className="text-xs font-medium text-slate-600">
                 Monthly Usage
               </p>
-              <p className="text-xl font-bold text-slate-800">
+              <p className="text-lg font-bold text-slate-800">
                 {stats?.monthlyUsage || "0 GB"}
               </p>
             </div>
@@ -85,7 +88,7 @@ export function DashboardStats() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between text-xs">
               <span className="text-slate-600">Usage Progress</span>
               <span className="text-slate-800 font-medium">
                 {stats?.usagePercentage || 0}%
@@ -101,10 +104,10 @@ export function DashboardStats() {
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-slate-600">
+              <p className="text-xs font-medium text-slate-600">
                 Active Alerts
               </p>
-              <p className="text-xl font-bold text-slate-800">
+              <p className="text-lg font-bold text-slate-800">
                 {stats?.activeAlerts || 0}
               </p>
             </div>
@@ -113,13 +116,13 @@ export function DashboardStats() {
             </div>
           </div>
           <div className="mt-4 space-y-2">
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between text-xs">
               <span className="text-slate-600">Usage Alerts</span>
               <span className="text-yellow-600 font-medium">
                 {stats?.usageAlerts || 0}
               </span>
             </div>
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between text-xs">
               <span className="text-slate-600">Connection Alerts</span>
               <span className="text-red-600 font-medium">
                 {stats?.connectionAlerts || 0}
@@ -134,8 +137,8 @@ export function DashboardStats() {
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-slate-600">Avg Signal</p>
-              <p className="text-xl font-bold text-slate-800">
+              <p className="text-xs font-medium text-slate-600">Avg Signal</p>
+              <p className="text-lg font-bold text-slate-800">
                 {stats?.avgSignal || 0}%
               </p>
             </div>
@@ -144,7 +147,7 @@ export function DashboardStats() {
             </div>
           </div>
           <div className="mt-4">
-            <div className="flex items-center text-sm text-green-600">
+            <div className="flex items-center text-xs text-green-600">
               <span>+2.3% from last week</span>
             </div>
           </div>

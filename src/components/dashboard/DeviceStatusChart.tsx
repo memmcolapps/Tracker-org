@@ -10,27 +10,26 @@ import {
 // import { useDeviceAnalytics } from "@/hooks/useAnalytics";
 import { Button } from "@/components/ui/button";
 
-const COLORS = {
-  online: "hsl(var(--success))",
-  offline: "hsl(var(--destructive))",
-  error: "hsl(var(--warning))",
-};
+// const COLORS = {
+//   online: "hsl(var(--success))",
+//   offline: "hsl(var(--destructive))",
+//   error: "hsl(var(--warning))",
+// };
 
 const isLoading = false;
+
 const deviceData = [
-  {
-    device: "DEV-001",
-    status: "online",
-  },
-  {
-    device: "DEV-002",
-    status: "offline",
-  },
-  {
-    device: "DEV-003",
-    status: "error",
-  },
+  { status: "online", count: 75, name: "Online" },
+  { status: "offline", count: 15, name: "Offline" },
+  { status: "deactivated", count: 10, name: "Deactivated" },
 ];
+
+// Define colors for the chart slices
+const COLORS = {
+  online: "#82ca9d", // Greenish
+  offline: "#ffc658", // Yellowish/Orange
+  deactivated: "#ff7300", // More orange/red
+};
 export function DeviceStatusChart() {
   // const { data: deviceData, isLoading } = useDeviceAnalytics();
 

@@ -39,6 +39,10 @@ const usageData = [
     date: "2022-01-05",
     usage: 500,
   },
+  {
+    date: "2022-01-07",
+    usage: 500,
+  },
 ];
 
 export function UsageChart() {
