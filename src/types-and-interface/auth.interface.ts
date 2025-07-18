@@ -9,6 +9,15 @@ export interface User {
   firstName: string;
   lastName: string;
   role: string;
+  organization?: Organization;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface Organization {
+  id: string;
+  name: string;
+  logoUrl: string;
   createdAt?: string;
   updatedAt?: string;
 }
