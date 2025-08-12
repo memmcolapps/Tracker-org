@@ -9,6 +9,7 @@ import {
   FileText,
   Users,
 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
@@ -19,20 +20,31 @@ const navigation = [
   { name: "Users", href: "/users", icon: Users },
 ];
 
+const DEFAULT_LOGO_URL =
+  "https://upload.wikimedia.org/wikipedia/en/thumb/1/1c/Nigeria_Police_logo.jpg/250px-Nigeria_Police_logo.jpg";
+
 export function Sidebar() {
   const [location] = useLocation();
+  const { user } = useAuth();
+
+  const logoUrl = user?.organization?.logoUrl || DEFAULT_LOGO_URL;
 
   return (
     <div className="hidden lg:flex lg:w-64 lg:flex-col">
       <div className="flex-1 flex flex-col min-h-0 bg-white border-r border-slate-200">
         <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-          {/* Logo */}
           <div className="flex items-center flex-shrink-0 px-4">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Building2 className="w-5 h-5 text-white" />
-            </div>
+            <img
+              src={logoUrl}
+              alt="Organization Logo"
+              className="w-8 h-8 rounded-lg object-cover"
+              onError={(e) => {
+                // Fallback to default logo if the provided one fails to load
+                (e.target as HTMLImageElement).src = DEFAULT_LOGO_URL;
+              }}
+            />
             <span className="ml-3 text-xl font-semibold text-slate-800">
-              Nigeria Police
+              {user?.organization?.name || "Organization"}
             </span>
           </div>
 
