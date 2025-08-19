@@ -1,21 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-// import { Device } from "@shared/schema";
 import { formatDistanceToNow } from "date-fns";
 import { Smartphone, Eye, MapPin, Settings, Signal, Copy } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Device } from "@/types-and-interface/device.interface";
 
-interface Device {
-  id: string;
-  label: string;
-  location: string;
-  status: string;
-  lastSeen: string;
-  imei: string;
-  networkProvider: string;
-  signalStrength: number;
-}
 interface DeviceCardProps {
   device: Device;
   onViewDetails?: (device: Device) => void;
@@ -55,8 +45,8 @@ export function DeviceCard({
   onViewLocation,
   onSettings,
 }: DeviceCardProps) {
-  const handleCopyIMEI = () => {
-    navigator.clipboard.writeText(device.imei);
+  const handleCopySIM = () => {
+    navigator.clipboard.writeText(device.simNumber);
   };
 
   return (
@@ -74,9 +64,11 @@ export function DeviceCard({
             </div>
             <div>
               <h3 className="text-lg font-semibold text-slate-800">
-                {device.label}
+                {device.name}
               </h3>
-              <p className="text-sm text-slate-500">{device.location}</p>
+              <p className="text-sm text-slate-500">
+                {device.coordinates.latitude}, {device.coordinates.longitude}
+              </p>
             </div>
           </div>
 
@@ -86,9 +78,9 @@ export function DeviceCard({
                 {device.status}
               </Badge>
               <p className="text-xs text-slate-500 mt-1">
-                Last seen:{" "}
-                {device.lastSeen
-                  ? formatDistanceToNow(new Date(device.lastSeen), {
+                Last online:{" "}
+                {device.lastOnlineAt
+                  ? formatDistanceToNow(new Date(device.lastOnlineAt), {
                       addSuffix: true,
                     })
                   : "Never"}
@@ -98,16 +90,6 @@ export function DeviceCard({
             <div className="text-center">
               <p className="text-sm font-medium text-slate-800">2.4 GB</p>
               <p className="text-xs text-slate-500">This month</p>
-            </div>
-
-            <div className="text-center">
-              <div className="flex items-center space-x-1">
-                <Signal className="h-4 w-4 text-green-600" />
-                <span className="text-sm font-medium text-slate-800">
-                  {device.signalStrength}%
-                </span>
-              </div>
-              <p className="text-xs text-slate-500">Signal</p>
             </div>
 
             <div className="flex items-center space-x-2">
@@ -141,9 +123,9 @@ export function DeviceCard({
             <p className="text-xs text-slate-500">IMEI</p>
             <div className="flex items-center space-x-2">
               <p className="text-sm font-medium text-slate-800">
-                {device.imei}
+                {device.simNumber}
               </p>
-              <Button variant="ghost" size="sm" onClick={handleCopyIMEI}>
+              <Button variant="ghost" size="sm" onClick={handleCopySIM}>
                 <Copy className="h-3 w-3" />
               </Button>
             </div>
@@ -152,14 +134,14 @@ export function DeviceCard({
             <p className="text-xs text-slate-500">Network</p>
             <div className="flex items-center space-x-2">
               <span className="text-sm font-medium text-slate-800">
-                {device.networkProvider}
+                {device.simType}
               </span>
             </div>
           </div>
           <div>
             <p className="text-xs text-slate-500">Location</p>
             <p className="text-sm font-medium text-slate-800">
-              {device.location}
+              {device.coordinates.latitude}, {device.coordinates.longitude}
             </p>
           </div>
         </div>

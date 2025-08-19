@@ -4,110 +4,27 @@ import { DeviceFilters } from "@/components/devices/DeviceFilters";
 import { Button } from "@/components/ui/button";
 import { Plus, List, Grid } from "lucide-react";
 import { useState } from "react";
-
-const devices = [
-  {
-    id: "1",
-    name: "iPhone 14",
-    status: "online",
-    location: "San Francisco, CA",
-    lastSeen: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-    label: "DEV-001",
-    imei: "123456789012345",
-    networkProvider: "Verizon",
-    signalStrength: 100,
-  },
-  {
-    id: "2",
-    name: "iPhone 14",
-    status: "online",
-    location: "San Francisco, CA",
-    lastSeen: new Date(Date.now() - 1 * 60 * 1000).toISOString(),
-    label: "DEV-002",
-    imei: "123456789012345",
-    networkProvider: "Verizon",
-    signalStrength: 100,
-  },
-  {
-    id: "3",
-    name: "iPhone 14",
-    status: "online",
-    location: "New York, NY",
-    lastSeen: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-    label: "DEV-001",
-    imei: "123456789012345",
-    networkProvider: "Verizon",
-    signalStrength: 100,
-  },
-  {
-    id: "4",
-    name: "iPhone 14",
-    status: "online",
-    location: "San Francisco, CA",
-    lastSeen: new Date(Date.now() - 1 * 60 * 1000).toISOString(),
-    label: "DEV-002",
-    imei: "123456789012345",
-    networkProvider: "Verizon",
-    signalStrength: 100,
-  },
-  {
-    id: "5",
-    name: "iPhone 14",
-    status: "online",
-    location: "San Francisco, CA",
-    lastSeen: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-    label: "DEV-003",
-    imei: "123456789012345",
-    networkProvider: "Verizon",
-    signalStrength: 100,
-  },
-];
+import { useDevices } from "@/hooks/use-devices";
 
 export default function Devices() {
-  const isLoading = false;
-  // const { data: devices, isLoading } = useDevices();
+  const { data: devices, isLoading } = useDevices();
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
 
   return (
     <div>
       <div className="p-6">
-        {/* Page Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-slate-800">
               Device Management
             </h2>
-            <div className="flex items-center space-x-4">
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                Add Device
-              </Button>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant={viewMode === "list" ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setViewMode("list")}
-                >
-                  <List className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={viewMode === "grid" ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setViewMode("grid")}
-                >
-                  <Grid className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* Filters */}
         <div className="mb-6">
           <DeviceFilters />
         </div>
 
-        {/* Device List */}
         {isLoading ? (
           <div className="space-y-4">
             {[...Array(5)].map((_, i) => (
