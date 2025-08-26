@@ -11,129 +11,16 @@ import { InteractiveMap } from "@/components/locations/InteractiveMap";
 import { Plus, Smartphone } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useEffect, useState } from "react";
-
-const mockDeviceList = [
-  {
-    id: "1",
-    label: "Abuja",
-    location: "Abuja, FCT",
-    status: "online",
-    coordinates: [9.0765, 7.3986],
-    lastSeen: new Date(Date.now()).toISOString(), // Placeholder for current time
-  },
-  {
-    id: "2",
-    label: "Lagos",
-    location: "Lagos, Lagos State",
-    status: "online",
-    coordinates: [6.5244, 3.3792],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "3",
-    label: "Kano",
-    location: "Kano, Kano State",
-    status: "online",
-    coordinates: [12.0, 8.5167],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "4",
-    label: "Ibadan",
-    location: "Ibadan, Oyo State",
-    status: "online",
-    coordinates: [7.3964, 3.9178],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "5",
-    label: "Port Harcourt",
-    location: "Port Harcourt, Rivers State",
-    status: "offline",
-    coordinates: [4.7717, 7.0042],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "6",
-    label: "Benin City",
-    location: "Benin City, Edo State",
-    status: "online",
-    coordinates: [6.3333, 5.6167],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "7",
-    label: "Enugu",
-    location: "Enugu, Enugu State",
-    status: "online",
-    coordinates: [6.4357, 7.4953],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "8",
-    label: "Kaduna",
-    location: "Kaduna, Kaduna State",
-    status: "offline",
-    coordinates: [10.5167, 7.4333],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "9",
-    label: "Jos",
-    location: "Jos, Plateau State",
-    status: "online",
-    coordinates: [9.9231, 8.8906],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "10",
-    label: "Zuma Rock",
-    location: "Near Abuja, Niger State",
-    status: "online",
-    coordinates: [9.7397, 7.2478],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "11",
-    label: "Erin-Ijesha Waterfalls",
-    location: "Erin-Ijesha, Osun State",
-    status: "online",
-    coordinates: [7.4906, 4.8119],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "12",
-    label: "Mount Chappal Waddi",
-    location: "Taraba State",
-    status: "online",
-    coordinates: [7.067, 11.083],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "13",
-    label: "Ogbunike Caves",
-    location: "Ogbunike, Anambra State",
-    status: "online",
-    coordinates: [6.1822, 6.9389],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "14",
-    label: "Niger River Delta (Central)",
-    location: "Niger Delta Region",
-    status: "online",
-    coordinates: [5.0, 6.0],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-];
+import { useDevices } from "@/hooks/use-devices";
+import { Device } from "@/types-and-interface/device.interface";
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case "online":
+    case "ONLINE":
       return "bg-green-100 text-green-600";
-    case "warning":
-      return "bg-yellow-100 text-yellow-600";
-    case "offline":
+    case "OFFLINE":
+      return "bg-red-100 text-red-600";
+    case "ERROR":
       return "bg-red-100 text-red-600";
     default:
       return "bg-gray-100 text-gray-600";
@@ -141,6 +28,7 @@ const getStatusColor = (status: string) => {
 };
 
 export default function Locations() {
+  const { data: devices, isLoading } = useDevices();
   const [focusDevice, setFocusDevice] = useState<
     | {
         id: string;
@@ -224,46 +112,67 @@ export default function Locations() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           {/* Map */}
           <div className="lg:col-span-2">
-            <InteractiveMap focusDevice={focusDevice} />
+            <InteractiveMap focusDevice={focusDevice} devices={devices || []} />
           </div>
 
           {/* Device List */}
           <Card>
             <CardHeader>
-              <CardTitle>Devices</CardTitle>
+              <CardTitle>Devices ({devices?.length || 0})</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4 max-h-80 overflow-y-auto scrollbar-hide">
-                {mockDeviceList.map((device) => (
-                  <div
-                    key={device.id}
-                    className="flex items-center justify-between p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div
-                        className={`w-8 h-8 rounded-lg flex items-center justify-center ${getStatusColor(
-                          device.status
-                        )}`}
-                      >
-                        <Smartphone className="h-4 w-4" />
+              {isLoading ? (
+                <div className="space-y-4 max-h-80 overflow-y-auto scrollbar-hide">
+                  {[...Array(5)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="h-16 bg-slate-100 rounded animate-pulse"
+                    ></div>
+                  ))}
+                </div>
+              ) : devices && devices.length > 0 ? (
+                <div className="space-y-4 max-h-80 overflow-y-auto scrollbar-hide">
+                  {devices.map((device: Device) => (
+                    <div
+                      key={device.id}
+                      className="flex items-center justify-between p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div
+                          className={`w-8 h-8 rounded-lg flex items-center justify-center ${getStatusColor(
+                            device.status
+                          )}`}
+                        >
+                          <Smartphone className="h-4 w-4" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-slate-800">
+                            {device.name}
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            {device.coordinates.latitude.toFixed(4)},{" "}
+                            {device.coordinates.longitude.toFixed(4)}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-slate-800">
-                          {device.label}
-                        </p>
-                        <p className="text-xs text-slate-500">
-                          {device.location}
-                        </p>
+                      <div className="text-xs text-slate-500">
+                        {device.lastOnlineAt
+                          ? formatDistanceToNow(new Date(device.lastOnlineAt), {
+                              addSuffix: true,
+                            })
+                          : "Never"}
                       </div>
                     </div>
-                    <div className="text-xs text-slate-500">
-                      {formatDistanceToNow(new Date(device.lastSeen), {
-                        addSuffix: true,
-                      })}
-                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-40 text-slate-500">
+                  <div className="text-center">
+                    <Smartphone className="h-8 w-8 mx-auto mb-2 text-slate-400" />
+                    <p className="text-sm">No devices found</p>
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

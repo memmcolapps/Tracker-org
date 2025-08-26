@@ -2,135 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ZoomIn, Expand, MapPin, Layers } from "lucide-react";
+import { Device } from "@/types-and-interface/device.interface";
 
 declare global {
   interface Window {
     L: any;
   }
-}
-
-// Mock device data with real coordinates
-const deviceData = [
-  {
-    id: "1",
-    label: "Abuja",
-    location: "Abuja, FCT",
-    status: "online",
-    coordinates: [9.0765, 7.3986],
-    lastSeen: new Date(Date.now()).toISOString(), // Placeholder for current time
-  },
-  {
-    id: "2",
-    label: "Lagos",
-    location: "Lagos, Lagos State",
-    status: "online",
-    coordinates: [6.5244, 3.3792],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "3",
-    label: "Kano",
-    location: "Kano, Kano State",
-    status: "online",
-    coordinates: [12.0, 8.5167],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "4",
-    label: "Ibadan",
-    location: "Ibadan, Oyo State",
-    status: "online",
-    coordinates: [7.3964, 3.9178],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "5",
-    label: "Port Harcourt",
-    location: "Port Harcourt, Rivers State",
-    status: "offline",
-    coordinates: [4.7717, 7.0042],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "6",
-    label: "Benin City",
-    location: "Benin City, Edo State",
-    status: "online",
-    coordinates: [6.3333, 5.6167],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "7",
-    label: "Enugu",
-    location: "Enugu, Enugu State",
-    status: "online",
-    coordinates: [6.4357, 7.4953],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "8",
-    label: "Kaduna",
-    location: "Kaduna, Kaduna State",
-    status: "offline",
-    coordinates: [10.5167, 7.4333],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "9",
-    label: "Jos",
-    location: "Jos, Plateau State",
-    status: "online",
-    coordinates: [9.9231, 8.8906],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "10",
-    label: "Zuma Rock",
-    location: "Near Abuja, Niger State",
-    status: "online",
-    coordinates: [9.7397, 7.2478],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "11",
-    label: "Erin-Ijesha Waterfalls",
-    location: "Erin-Ijesha, Osun State",
-    status: "online",
-    coordinates: [7.4906, 4.8119],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "12",
-    label: "Mount Chappal Waddi",
-    location: "Taraba State",
-    status: "online",
-    coordinates: [7.067, 11.083],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "13",
-    label: "Ogbunike Caves",
-    location: "Ogbunike, Anambra State",
-    status: "online",
-    coordinates: [6.1822, 6.9389],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-  {
-    id: "14",
-    label: "Niger River Delta (Central)",
-    location: "Niger Delta Region",
-    status: "online",
-    coordinates: [5.0, 6.0],
-    lastSeen: new Date(Date.now()).toISOString(),
-  },
-];
-interface Device {
-  id: string;
-  label: string;
-  location: string;
-  status: string;
-  coordinates: number[];
-  lastSeen: string;
 }
 
 interface InteractiveMapProps {
@@ -140,9 +17,13 @@ interface InteractiveMapProps {
     lat: number;
     lng: number;
   };
+  devices?: Device[];
 }
 
-export function InteractiveMap({ focusDevice }: InteractiveMapProps) {
+export function InteractiveMap({
+  focusDevice,
+  devices = [],
+}: InteractiveMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
@@ -183,7 +64,7 @@ export function InteractiveMap({ focusDevice }: InteractiveMapProps) {
         mapInstanceRef.current.remove();
       }
     };
-  }, []);
+  }, [devices]); // Add devices to dependency array to re-render when devices change
 
   // Effect to handle focusing on a specific device
   useEffect(() => {
@@ -319,9 +200,9 @@ export function InteractiveMap({ focusDevice }: InteractiveMapProps) {
     // Create custom icons for different statuses
     const createIcon = (status: string) => {
       const colors: Record<string, string> = {
-        online: "#10b981",
-        warning: "#f59e0b",
-        offline: "#ef4444",
+        ONLINE: "#10b981",
+        OFFLINE: "#ef4444",
+        ERROR: "#ef4444",
       };
 
       return window.L.divIcon({
@@ -352,19 +233,22 @@ export function InteractiveMap({ focusDevice }: InteractiveMapProps) {
     };
 
     // Add markers for each device
-    deviceData.forEach((device) => {
-      const marker = window.L.marker(device.coordinates, {
-        icon: createIcon(device.status),
-      }).addTo(map);
+    devices.forEach((device) => {
+      const marker = window.L.marker(
+        [device.coordinates.latitude, device.coordinates.longitude],
+        {
+          icon: createIcon(device.status),
+        }
+      ).addTo(map);
 
       // Create popup content
       const popupContent = `
         <div style="font-family: system-ui, -apple-system, sans-serif; min-width: 200px;">
           <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #1f2937;">
-            ${device.label}
+            ${device.name}
           </h3>
           <p style="margin: 4px 0; font-size: 14px; color: #4b5563;">
-            <strong>Location:</strong> ${device.location}
+            <strong>Model:</strong> ${device.model}
           </p>
           <p style="margin: 4px 0; font-size: 14px; color: #4b5563;">
             <strong>Status:</strong> 
@@ -374,32 +258,27 @@ export function InteractiveMap({ focusDevice }: InteractiveMapProps) {
               font-size: 12px;
               font-weight: 500;
               background-color: ${
-                device.status === "online"
-                  ? "#dcfce7"
-                  : device.status === "warning"
-                  ? "#fef3c7"
-                  : "#fee2e2"
+                device.status === "ONLINE" ? "#dcfce7" : "#fee2e2"
               };
-              color: ${
-                device.status === "online"
-                  ? "#166534"
-                  : device.status === "warning"
-                  ? "#92400e"
-                  : "#991b1b"
-              };
+              color: ${device.status === "ONLINE" ? "#166534" : "#991b1b"};
             ">
-              ${device.status.charAt(0).toUpperCase() + device.status.slice(1)}
+              ${
+                device.status.charAt(0).toUpperCase() +
+                device.status.slice(1).toLowerCase()
+              }
             </span>
           </p>
           <p style="margin: 4px 0; font-size: 14px; color: #4b5563;">
-            <strong>Last Seen:</strong> ${formatDistanceToNow(
-              new Date(device.lastSeen)
-            )}
+            <strong>Last Online:</strong> ${
+              device.lastOnlineAt
+                ? formatDistanceToNow(new Date(device.lastOnlineAt))
+                : "Never"
+            }
           </p>
           <p style="margin: 8px 0 0 0; font-size: 12px; color: #6b7280;">
-            Lat: ${device.coordinates[0].toFixed(
+            Lat: ${device.coordinates.latitude.toFixed(
               4
-            )}, Lng: ${device.coordinates[1].toFixed(4)}
+            )}, Lng: ${device.coordinates.longitude.toFixed(4)}
           </p>
         </div>
       `;
@@ -414,7 +293,7 @@ export function InteractiveMap({ focusDevice }: InteractiveMapProps) {
     });
 
     // Fit map to show all markers (only if no focus device is specified)
-    if (deviceData.length > 0 && !focusDevice) {
+    if (devices.length > 0 && !focusDevice) {
       const group = new window.L.featureGroup(markersRef.current);
       map.fitBounds(group.getBounds().pad(0.1));
     }
@@ -488,7 +367,7 @@ export function InteractiveMap({ focusDevice }: InteractiveMapProps) {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || devices.length === 0) {
     return (
       <Card className="h-96">
         <CardHeader>
@@ -498,7 +377,9 @@ export function InteractiveMap({ focusDevice }: InteractiveMapProps) {
           <div className="h-80 bg-slate-100 rounded animate-pulse flex items-center justify-center">
             <div className="text-center">
               <MapPin className="h-8 w-8 text-slate-400 mx-auto mb-2" />
-              <p className="text-sm text-slate-500">Loading map...</p>
+              <p className="text-sm text-slate-500">
+                {isLoading ? "Loading map..." : "Loading devices..."}
+              </p>
             </div>
           </div>
         </CardContent>
@@ -547,18 +428,18 @@ export function InteractiveMap({ focusDevice }: InteractiveMapProps) {
           <div className="flex items-center space-x-4">
             <span className="flex items-center">
               <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-              Online: {deviceData.filter((d) => d.status === "online").length}
-            </span>
-            <span className="flex items-center">
-              <div className="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
-              Warning: {deviceData.filter((d) => d.status === "warning").length}
+              Online: {devices.filter((d) => d.status === "ONLINE").length}
             </span>
             <span className="flex items-center">
               <div className="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
-              Offline: {deviceData.filter((d) => d.status === "offline").length}
+              Offline: {devices.filter((d) => d.status === "OFFLINE").length}
+            </span>
+            <span className="flex items-center">
+              <div className="w-3 h-3 bg-red-600 rounded-full mr-2"></div>
+              Error: {devices.filter((d) => d.status === "ERROR").length}
             </span>
           </div>
-          <span>Total: {deviceData.length} devices</span>
+          <span>Total: {devices.length} devices</span>
         </div>
 
         {selectedDevice && (
@@ -567,7 +448,7 @@ export function InteractiveMap({ focusDevice }: InteractiveMapProps) {
               Selected Device
             </h4>
             <p className="text-sm text-blue-800">
-              {selectedDevice.label} - {selectedDevice.location}
+              {selectedDevice.name} - {selectedDevice.model}
             </p>
           </div>
         )}
