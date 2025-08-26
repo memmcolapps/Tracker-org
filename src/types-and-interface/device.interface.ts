@@ -35,6 +35,13 @@ export interface Device {
   lastOnlineAt: string;
   tags: Tag[];
   organizationName: string;
+  network: {
+    name: string;
+    country: string;
+    country_code: string;
+    mcc: string;
+    mnc: string;
+  };
   type: "CAR" | "WALKIE"; // Assuming other possible types
   createdAt: string;
   updatedAt: string;

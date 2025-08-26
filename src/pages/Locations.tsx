@@ -100,10 +100,10 @@ export default function Locations() {
                   <SelectItem value="offline">Offline Only</SelectItem>
                 </SelectContent>
               </Select>
-              <Button>
+              {/* <Button>
                 <Plus className="h-4 w-4 mr-2" />
                 Add Geofence
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>
