@@ -119,7 +119,7 @@ export function DeviceCard({
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
             <p className="text-xs text-slate-500">Sim Number</p>
             <div className="flex items-center space-x-2">
@@ -135,15 +135,31 @@ export function DeviceCard({
             <p className="text-xs text-slate-500">Network</p>
             <div className="flex items-center space-x-2">
               <span className="text-sm font-medium text-slate-800">
-                {device.simType}
+                {device.network?.name || device.simType}
               </span>
+              {device.network?.country && (
+                <span className="text-xs text-slate-500">
+                  ({device.network.country})
+                </span>
+              )}
             </div>
+            {device.network?.mcc && device.network?.mnc && (
+              <p className="text-xs text-slate-400 mt-1">
+                MCC: {device.network.mcc} | MNC: {device.network.mnc}
+              </p>
+            )}
           </div>
           <div>
             <p className="text-xs text-slate-500">Location</p>
             <p className="text-sm font-medium text-slate-800">
-              {device.coordinates.latitude}, {device.coordinates.longitude}
+              {device.coordinates.latitude.toFixed(4)},{" "}
+              {device.coordinates.longitude.toFixed(4)}
             </p>
+          </div>
+          <div>
+            <p className="text-xs text-slate-500">Model</p>
+            <p className="text-sm font-medium text-slate-800">{device.model}</p>
+            <p className="text-xs text-slate-400 mt-1">Type: {device.type}</p>
           </div>
         </div>
       </CardContent>

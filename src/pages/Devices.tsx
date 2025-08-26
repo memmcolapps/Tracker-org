@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/Header";
 import { DeviceCard } from "@/components/devices/DeviceCard";
 import { DeviceFilters } from "@/components/devices/DeviceFilters";
+import { DeviceDetailsModal } from "@/components/devices/DeviceDetailsModal";
 import { Button } from "@/components/ui/button";
 import { Plus, List, Grid } from "lucide-react";
 import { useState } from "react";
@@ -12,6 +13,8 @@ export default function Devices() {
   const { data: devices, isLoading } = useDevices();
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [, navigate] = useLocation();
+  const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
   const handleViewLocation = (device: Device) => {
     // Navigate to locations page with device coordinates as URL parameters
@@ -22,6 +25,16 @@ export default function Devices() {
       name: device.name,
     });
     navigate(`/locations?${params.toString()}`);
+  };
+
+  const handleViewDetails = (device: Device) => {
+    setSelectedDevice(device);
+    setIsDetailsModalOpen(true);
+  };
+
+  const handleCloseDetailsModal = () => {
+    setIsDetailsModalOpen(false);
+    setSelectedDevice(null);
   };
 
   return (
@@ -55,10 +68,19 @@ export default function Devices() {
                 key={device.id}
                 device={device}
                 onViewLocation={handleViewLocation}
+                onViewDetails={handleViewDetails}
               />
             ))}
           </div>
         )}
+
+        {/* Device Details Modal */}
+        <DeviceDetailsModal
+          device={selectedDevice}
+          isOpen={isDetailsModalOpen}
+          onClose={handleCloseDetailsModal}
+          onViewLocation={handleViewLocation}
+        />
 
         {/* Pagination */}
         <div className="flex items-center justify-between mt-6">

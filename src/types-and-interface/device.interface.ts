@@ -35,7 +35,7 @@ export interface Device {
   lastOnlineAt: string;
   tags: Tag[];
   organizationName: string;
-  network: {
+  network?: {
     name: string;
     country: string;
     country_code: string;
