@@ -15,11 +15,11 @@ interface DeviceCardProps {
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case "online":
+    case "ONLINE":
       return "bg-green-100 text-green-800";
-    case "offline":
+    case "OFFLINE":
       return "bg-red-100 text-red-800";
-    case "error":
+    case "ERROR":
       return "bg-red-100 text-red-800";
     default:
       return "bg-gray-100 text-gray-800";
@@ -28,11 +28,11 @@ const getStatusColor = (status: string) => {
 
 const getStatusIcon = (status: string) => {
   switch (status) {
-    case "online":
+    case "ONLINE":
       return "bg-green-100 text-green-600";
-    case "offline":
+    case "OFFLINE":
       return "bg-red-100 text-red-600";
-    case "error":
+    case "ERROR":
       return "bg-red-100 text-red-600";
     default:
       return "bg-gray-100 text-gray-600";
@@ -88,8 +88,9 @@ export function DeviceCard({
             </div>
 
             <div className="text-center">
-              <p className="text-sm font-medium text-slate-800">2.4 GB</p>
-              <p className="text-xs text-slate-500">This month</p>
+              <p className="text-sm font-medium text-slate-800">
+                {Math.round(device.usage / 1024 / 1024)} MB
+              </p>
             </div>
 
             <div className="flex items-center space-x-2">
@@ -120,7 +121,7 @@ export function DeviceCard({
 
         <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <p className="text-xs text-slate-500">IMEI</p>
+            <p className="text-xs text-slate-500">Sim Number</p>
             <div className="flex items-center space-x-2">
               <p className="text-sm font-medium text-slate-800">
                 {device.simNumber}

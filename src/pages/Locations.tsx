@@ -10,6 +10,7 @@ import {
 import { InteractiveMap } from "@/components/locations/InteractiveMap";
 import { Plus, Smartphone } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { useEffect, useState } from "react";
 
 const mockDeviceList = [
   {
@@ -140,16 +141,67 @@ const getStatusColor = (status: string) => {
 };
 
 export default function Locations() {
+  const [focusDevice, setFocusDevice] = useState<
+    | {
+        id: string;
+        name: string;
+        lat: number;
+        lng: number;
+      }
+    | undefined
+  >(undefined);
+
+  useEffect(() => {
+    // Parse URL parameters to check if a specific device should be focused
+    const urlParams = new URLSearchParams(window.location.search);
+    const deviceId = urlParams.get("deviceId");
+    const lat = urlParams.get("lat");
+    const lng = urlParams.get("lng");
+    const name = urlParams.get("name");
+
+    if (deviceId && lat && lng && name) {
+      setFocusDevice({
+        id: deviceId,
+        name: name,
+        lat: parseFloat(lat),
+        lng: parseFloat(lng),
+      });
+    }
+  }, []);
   return (
     <div>
       <div className="p-6">
         {/* Page Header */}
         <div className="mb-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-slate-800">
-              Device Locations
-            </h2>
+            <div>
+              <h2 className="text-xl font-semibold text-slate-800">
+                Device Locations
+              </h2>
+              {focusDevice && (
+                <p className="text-sm text-blue-600 mt-1">
+                  📍 Focused on: {focusDevice.name} (
+                  {focusDevice.lat.toFixed(4)}, {focusDevice.lng.toFixed(4)})
+                </p>
+              )}
+            </div>
             <div className="flex items-center space-x-4">
+              {focusDevice && (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setFocusDevice(undefined);
+                    // Update URL to remove parameters
+                    window.history.replaceState(
+                      {},
+                      document.title,
+                      window.location.pathname
+                    );
+                  }}
+                >
+                  Clear Focus
+                </Button>
+              )}
               <Select defaultValue="all">
                 <SelectTrigger className="w-32">
                   <SelectValue />
@@ -172,7 +224,7 @@ export default function Locations() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           {/* Map */}
           <div className="lg:col-span-2">
-            <InteractiveMap />
+            <InteractiveMap focusDevice={focusDevice} />
           </div>
 
           {/* Device List */}

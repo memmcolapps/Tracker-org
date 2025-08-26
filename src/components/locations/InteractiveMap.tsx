@@ -132,7 +132,17 @@ interface Device {
   coordinates: number[];
   lastSeen: string;
 }
-export function InteractiveMap() {
+
+interface InteractiveMapProps {
+  focusDevice?: {
+    id: string;
+    name: string;
+    lat: number;
+    lng: number;
+  };
+}
+
+export function InteractiveMap({ focusDevice }: InteractiveMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
@@ -175,13 +185,107 @@ export function InteractiveMap() {
     };
   }, []);
 
+  // Effect to handle focusing on a specific device
+  useEffect(() => {
+    // Add CSS animation for focus device marker
+    if (!document.querySelector("#focus-device-styles")) {
+      const style = document.createElement("style");
+      style.id = "focus-device-styles";
+      style.textContent = `
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.1);
+            opacity: 0.8;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+        .focus-device-marker {
+          z-index: 1000 !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    if (focusDevice && mapInstanceRef.current && window.L) {
+      // Focus on the specific device
+      mapInstanceRef.current.setView([focusDevice.lat, focusDevice.lng], 15);
+
+      // Add a special marker for the focused device
+      const focusIcon = window.L.divIcon({
+        html: `
+          <div style="
+            width: 30px;
+            height: 30px;
+            background-color: #3b82f6;
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+          ">
+            <div style="
+              width: 12px;
+              height: 12px;
+              background-color: white;
+              border-radius: 50%;
+            "></div>
+          </div>
+        `,
+        className: "focus-device-marker",
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
+      });
+
+      const focusMarker = window.L.marker([focusDevice.lat, focusDevice.lng], {
+        icon: focusIcon,
+      }).addTo(mapInstanceRef.current);
+
+      const focusPopupContent = `
+        <div style="font-family: system-ui, -apple-system, sans-serif; min-width: 200px;">
+          <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #1f2937;">
+            📍 ${focusDevice.name}
+          </h3>
+          <p style="margin: 4px 0; font-size: 14px; color: #3b82f6; font-weight: 500;">
+            <strong>Focused Device</strong>
+          </p>
+          <p style="margin: 4px 0; font-size: 14px; color: #4b5563;">
+            <strong>Coordinates:</strong> ${focusDevice.lat.toFixed(
+              4
+            )}, ${focusDevice.lng.toFixed(4)}
+          </p>
+        </div>
+      `;
+
+      focusMarker.bindPopup(focusPopupContent);
+      focusMarker.openPopup();
+
+      // Store the focus marker to clean it up later
+      markersRef.current.push(focusMarker);
+    }
+  }, [focusDevice]);
+
   const initializeMap = () => {
     if (!mapRef.current || !window.L) return;
 
-    // Initialize map centered on US
+    // Determine initial center and zoom based on focusDevice or default
+    const initialCenter = focusDevice
+      ? [focusDevice.lat, focusDevice.lng]
+      : [39.8283, -98.5795];
+    const initialZoom = focusDevice ? 15 : 4;
+
+    // Initialize map
     const map = window.L.map(mapRef.current, {
-      center: [39.8283, -98.5795],
-      zoom: 4,
+      center: initialCenter,
+      zoom: initialZoom,
       zoomControl: false,
     });
 
@@ -309,8 +413,8 @@ export function InteractiveMap() {
       markersRef.current.push(marker);
     });
 
-    // Fit map to show all markers
-    if (deviceData.length > 0) {
+    // Fit map to show all markers (only if no focus device is specified)
+    if (deviceData.length > 0 && !focusDevice) {
       const group = new window.L.featureGroup(markersRef.current);
       map.fitBounds(group.getBounds().pad(0.1));
     }

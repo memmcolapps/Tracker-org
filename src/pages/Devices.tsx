@@ -5,10 +5,24 @@ import { Button } from "@/components/ui/button";
 import { Plus, List, Grid } from "lucide-react";
 import { useState } from "react";
 import { useDevices } from "@/hooks/use-devices";
+import { useLocation } from "wouter";
+import { Device } from "@/types-and-interface/device.interface";
 
 export default function Devices() {
   const { data: devices, isLoading } = useDevices();
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+  const [, navigate] = useLocation();
+
+  const handleViewLocation = (device: Device) => {
+    // Navigate to locations page with device coordinates as URL parameters
+    const params = new URLSearchParams({
+      deviceId: device.id,
+      lat: device.coordinates.latitude.toString(),
+      lng: device.coordinates.longitude.toString(),
+      name: device.name,
+    });
+    navigate(`/locations?${params.toString()}`);
+  };
 
   return (
     <div>
@@ -37,7 +51,11 @@ export default function Devices() {
         ) : (
           <div className="space-y-4">
             {devices?.map((device) => (
-              <DeviceCard key={device.id} device={device} />
+              <DeviceCard
+                key={device.id}
+                device={device}
+                onViewLocation={handleViewLocation}
+              />
             ))}
           </div>
         )}
