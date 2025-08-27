@@ -1,12 +1,28 @@
 import { handleApiError } from "@/error";
-import { DevicesResponse } from "@/types-and-interface/device.interface";
 import axios, { type AxiosError } from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL_PRODUCTION;
 
-export const getDevicesApi = async (): Promise<{
+interface AdminResponse {
   success: boolean;
-  data?: any[];
+  users: Admin[];
+  error?: string;
+}
+
+interface Admin {
+  createdAt: string;
+  email: string;
+  firstName: string;
+  id: string;
+  lastName: string;
+  organizationId: string;
+  role: string;
+  updatedAt: string;
+}
+
+export const getAdminsApi = async (): Promise<{
+  success: boolean;
+  users?: Admin[];
   error?: string;
 }> => {
   try {
@@ -17,8 +33,8 @@ export const getDevicesApi = async (): Promise<{
         error: "User is not authenticated",
       };
     }
-    const response = await axios.get<DevicesResponse>(
-      `${BASE_URL}/organization/org/devices`,
+    const response = await axios.get<AdminResponse>(
+      `${BASE_URL}/user/getusers`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -32,10 +48,11 @@ export const getDevicesApi = async (): Promise<{
         error: response.data.error || "Unknown error",
       };
     }
+    console.log(response.data);
 
     return {
       success: true,
-      data: response.data.devices,
+      users: response.data.users,
     };
   } catch (error) {
     const errorResult = handleApiError(error);
