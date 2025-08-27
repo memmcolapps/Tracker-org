@@ -43,7 +43,6 @@ export function DeviceCard({
   device,
   onViewDetails,
   onViewLocation,
-  onSettings,
 }: DeviceCardProps) {
   const handleCopySIM = () => {
     navigator.clipboard.writeText(device.simNumber);
@@ -107,13 +106,6 @@ export function DeviceCard({
                 onClick={() => onViewLocation?.(device)}
               >
                 <MapPin className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onSettings?.(device)}
-              >
-                <Settings className="h-4 w-4" />
               </Button>
             </div>
           </div>
